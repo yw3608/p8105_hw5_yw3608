@@ -85,7 +85,7 @@ homicide_df %>%
 
 
 ```{r}
-nested_df = 
+results_df = 
   homicide_df %>% 
   nest(data = uid: resolution) %>% 
   mutate(
@@ -96,6 +96,28 @@ nested_df =
   unnest(tidy_results) %>% 
   select(city_state,estimate,starts_with("conf"))
   
+
+```
+
+
+
+**Problem 1.4**
+```{r}
+results_df %>% 
+  mutate(city_state = fct_reorder(city_state,estimate)) %>% 
+  ggplot(aes(x = city_state, y = estimate)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high)) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+```
+
+
+```{r}
+tibble(
+  files = list.files("./data/zip.data/")
+)
+
 
 ```
 
