@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
-library(purrr)
+library(readxl)
 ```
 
 **Problem 1.1**
@@ -27,7 +27,7 @@ homicide_df =
   relocate(city_state) %>%
   filter(city_state != "TulsaAL")
 ```
-**Describe the data** :
+**Describe the data** : The raw data shows that there are in total 12 variables. uid shows the id of the homicide id, reported_date show the date of the reported homicide date, victim_first show the first name of victim's first name. victim_race show the race of victim, victim-age represent the age. victim_sex represent the sex of victims. city represent the city where the case is reported. state show the state, lat is the latttitude, lon is the longitude and disposition shows weither the status of the case.
 
 
 **Problem 1.2**
@@ -134,11 +134,7 @@ data_f =
   ) %>% 
   
   select(week, subject_ID, control_arm, observation) 
-
-
-data_f
-
-
+ 
 ```
 
 **Problem 2.3**
@@ -154,8 +150,9 @@ plot =
   )
 plot
 
+ggsave("./plot.jpg")
 ```
-
+**Difference**:According to the plot,the overall observation scores in experiment control arms is higher than that of in control groups.The overall trend of control group is constant, however the overall trend of experiment group is increasing as the week increase(with time pass).
 
 
 **Problem 3**
