@@ -10,13 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(dplyr)
 library(purrr)
-library(readxl)
-library(stringi)
-
 ```
 
 **Problem 1.1**
-Describe the raw data. Create a city_state variable (e.g. “Baltimore, MD”) and then summarize within cities to obtain the total number of homicides and the number of unsolved homicides (those for which the disposition is “Closed without arrest” or “Open/No arrest”).
 ```{r, message = FALSE}
 homicide_df = 
   read_csv("./data/homicide-data.csv", na = c("", "Unknown")) %>%
@@ -31,11 +27,10 @@ homicide_df =
   relocate(city_state) %>%
   filter(city_state != "TulsaAL")
 ```
-
+**Describe the data** :
 
 
 **Problem 1.2**
-For the city of Baltimore, MD, use the prop.test function to estimate the proportion of homicides that are unsolved; save the output of prop.test as an R object, apply the broom::tidy to this object and pull the estimated proportion and confidence intervals from the resulting tidy dataframe.
 ```{r}
 baltimore_df = 
   homicide_df %>%
@@ -62,7 +57,6 @@ baltimore_test %>%
 
 
 **Problem 1.3**
-
 ```{r}
 prop_test_func = function(city_df){
   
@@ -120,8 +114,7 @@ results_df %>%
 
 
 
-
-**Problem 2**
+**Problem 2.1 & 2.2**
 ```{r,warning=FALSE,message=FALSE}
 data_f = 
   as_tibble( list.files("./data/zip.data/")) %>%
@@ -147,18 +140,20 @@ data_f
 
 
 ```
+
 **Problem 2.3**
 ```{r}
 plot = 
   data_f%>% 
   ggplot(aes(x = week, y = observation, group = control_arm, color = control_arm)) +
-  geom_line() +
+  geom_path() +
   labs(
     title = "Observations of control and experimental groups",
     x = "Week",
     y = "Observation"
   )
 plot
+
 ```
 
 
@@ -185,30 +180,18 @@ fillin_NA =
     else {
     stop("Data entered not valid, should be number or letter")
   }
-    
-    
+  
   return(x)   
-
   }
   
 
 iris_finished = 
-iris_with_missing %>% 
+  iris_with_missing %>% 
   map_df(~ fillin_NA(.)) %>% 
   as_tibble()  %>% 
   knitr::kable()
 iris_finished
 ```
-
-
-
-
-
-
-
-
-
-
 
 
 
