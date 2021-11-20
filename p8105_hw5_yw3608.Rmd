@@ -8,6 +8,11 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(dplyr)
+library(purrr)
+library(readxl)
+library(ggplot2)
+
 ```
 
 **Problem 1.1**
@@ -113,11 +118,45 @@ results_df %>%
 ```
 
 
+
+
+
+**Problem 3**
+For numeric variables, you should fill in missing values with the mean of non-missing values
+For character variables, you should fill in missing values with "virginica"
 ```{r}
-tibble(
-  files = list.files("./data/zip.data/")
-)
+set.seed(10)
+iris_with_missing = 
+  iris %>% 
+  map_df(~replace(.x, sample(1:150, 20), NA)) %>%
+  mutate(Species = as.character(Species))
 
 
+fillin_NA = 
+  function(x) {
+  
+  if (is.character(x)) {
+    x = ifelse(is.na(x), "virginica", x)
+  } 
+  else if(is.numeric(x)) {
+    x = ifelse(is.na(x), mean(x, na.rm = TRUE), x)
+    } 
+  
+    else {
+    stop("Data entered not valid, should be number or letter")
+  }
+    
+    
+  return(x)   
+
+  }
+  
+
+iris_with_missing = 
+iris_with_missing %>% 
+  map_df(~ fillin_NA(.))
+iris_with_missing
 ```
+
+
 
