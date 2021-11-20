@@ -13,7 +13,7 @@ library(readxl)
 ```
 
 **Problem 1.1**
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 homicide_df = 
   read_csv("./data/homicide-data.csv", na = c("", "Unknown")) %>%
   mutate(
@@ -117,7 +117,7 @@ results_df %>%
 **Problem 2.1 & 2.2**
 ```{r,warning=FALSE,message=FALSE}
 data_f = 
-  as_tibble( list.files("./data/zip.data/")) %>%
+  as_tibble(list.files("./data/zip.data/")) %>%
   mutate(
     text = map(.x = value, ~read_csv(str_c("./data/zip.data/", .x)))) %>% 
   unnest() %>% 
@@ -132,7 +132,6 @@ data_f =
     control_arm == "con" ~ "control",
     control_arm == "exp" ~ "experiment")
   ) %>% 
-  
   select(week, subject_ID, control_arm, observation) 
  
 ```
@@ -140,7 +139,7 @@ data_f =
 **Problem 2.3**
 ```{r}
 plot = 
-  data_f%>% 
+  data_f %>% 
   ggplot(aes(x = week, y = observation, group = control_arm, color = control_arm)) +
   geom_path() +
   labs(
@@ -149,10 +148,9 @@ plot =
     y = "Observation"
   )
 plot
-
 ggsave("./plot.jpg")
 ```
-**Difference**:According to the plot,the overall observation scores in experiment control arms is higher than that of in control groups.The overall trend of control group is constant, however the overall trend of experiment group is increasing as the week increase(with time pass).
+**Difference**:According to the plot,the overall observation scores in experiment control arms is higher than that of in control groups.The overall trend of control group is "constant", however the overall trend of experiment group is increasing as the week increase(with time pass).
 
 
 **Problem 3**
